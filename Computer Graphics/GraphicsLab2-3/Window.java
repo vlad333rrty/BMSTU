@@ -77,8 +77,6 @@ public class Window {
                 cos(phi), sin(phi)*sin(t), sin(phi)*cos(t),0,0,cos(t),-sin(t),0,sin(phi), -cos(phi)*sin(t), -cos(phi)*cos(t),
                 0,0,0,0,1,
         };
-        Pyramid pyramid=new Pyramid(new Vector3f(600,400,0),60,30,200);
-        models.add(pyramid);
         while (!GLFW.glfwWindowShouldClose(window)){
             next = getTime();
             ut += next - time;
@@ -95,7 +93,6 @@ public class Window {
                 glDisable(GL_CULL_FACE);
 
                 c.draw(m);
-                pyramid.draw();
 
                 GLFW.glfwSwapBuffers(window);
             }
@@ -188,3 +185,4 @@ public class Window {
         }
     }
 }
+
