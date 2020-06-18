@@ -50,72 +50,6 @@ public class Model {
         glEnd();
     }
 
-//    ArrayList<ArrayList<Vector2i>> cut(Model m){
-//        ArrayList<Vector2i> result=new ArrayList<>(m.vertices);
-//        ArrayList<ArrayList<Vector2i>> r=new ArrayList<>();
-//        ArrayList<Vector2i> intersections=new ArrayList<>();
-//        Vector2i cp1=vertices.get(vertices.size()-1),cp2,s,e;
-//        for (Vector2i value : vertices) {
-//            cp2 = value;
-//            result.clear();
-//            s = m.vertices.get(m.vertices.size() - 1);
-//            for (Vector2i vertex : m.vertices) {
-//                e = vertex;
-//                if (!isInside(e,cp1,cp2)){
-//                    if (isInside(s,cp1,cp2)) {
-//                        Vector2i intersection=getIntersection(e, s, cp1, cp2);
-//                        intersections.add(intersection);
-//                        result.add(intersection);
-//                    }
-//                    result.add(e);
-//                }else if (!isInside(s,cp1,cp2)){
-//                    Vector2i intersection=getIntersection(e, s, cp1, cp2);
-//                    intersections.add(intersection);
-//                    result.add(intersection);
-//                }
-//                s = e;
-//            }
-//
-//            r.add(new ArrayList<>(result));
-//            cp1 = cp2;
-//        }
-//        return r;
-//    }
-//
-//    ArrayList<ArrayList<Vector2i>> innerCut(Model m){
-//        ArrayList<Vector2i> result=new ArrayList<>(m.vertices);
-//        ArrayList<ArrayList<Vector2i>> r=new ArrayList<>();
-//        ArrayList<Vector2i> input=new ArrayList<>();
-//        ArrayList<Vector2i> intersections=new ArrayList<>();
-//        Vector2i cp1=vertices.get(vertices.size()-1),cp2,s,e;
-//        for (Vector2i value : vertices) {
-//            cp2 = value;
-//            input.clear();
-//            input.addAll(result);
-//            result.clear();
-//            s = input.get(input.size() - 1);
-//            for (Vector2i vertex : input) {
-//                e = vertex;
-//                if (isInside(e, cp1, cp2)) {
-//                    if (!isInside(s, cp1, cp2)) {
-//                        Vector2i i=getIntersection(e, s, cp1, cp2);
-//                        result.add(i);
-//                        intersections.add(i);
-//                    }
-//                    result.add(e);
-//                } else if (isInside(s, cp1, cp2)) {
-//                    Vector2i i=getIntersection(e, s, cp1, cp2);
-//                    result.add(i);
-//                    intersections.add(i);
-//                }
-//                s = e;
-//            }
-//            cp1 = cp2;
-//        }
-//        r.add(new ArrayList<>(result));
-//        return r;
-//    }
-
     ArrayList<ArrayList<Vector2i>> myCut(Model m,ArrayList<Edge> edges){
         ArrayList<ArrayList<Vector2i>> result=new ArrayList<>();
         ArrayList<Vector2i> input=new ArrayList<>();
@@ -141,61 +75,13 @@ public class Model {
             scp=ecp;
             input.clear();
         }
-        //result.add(check(output));
         result.add(output);
-        //nextTry(output);
-        edges.addAll(whatYouAreDoingIsWrong(output));
+        edges.addAll(finalEdges(output));
         return result;
     }
 
-//
-//    ArrayList<Edge> nextTry(ArrayList<Vector2i> vertices){
-//        ArrayList<Edge> edges=new ArrayList<>();
-//        int i;
-//        for (i=0;i<vertices.size();i++) edges.add(new Edge(vertices.get(i),vertices.get((i+1)%vertices.size())));
-//        l:for (i=0;i<edges.size();i++){
-//            for (int j=i+1;j<edges.size();j++){
-//                if (edges.get(j).isCollinear(edges.get(i))) break l;
-//            }
-//        }
-//        System.out.println(i);
-//        if (i== edges.size()) return null;
-//        ArrayList<Edge> collinearEdges=new ArrayList<>();
-//        Edge minC=edges.get(i);
-//        for (Edge edge : edges) {
-//            if (edge.isCollinear(minC)) {
-//                if (edge.lengthSquared() < minC.lengthSquared()) minC = edge;
-//                collinearEdges.add(edge);
-//            }
-//        }
-//        collinearEdges.remove(minC);
-//        for (int j=0;j<collinearEdges.size();j++){
-//            Edge e1,e2;
-//            if (collinearEdges.get(j).a.sub(minC.a,new Vector2i()).lengthSquared()
-//                    <
-//                    collinearEdges.get(j).a.sub(minC.b,new Vector2i()).lengthSquared()){
-//                e1=new Edge(new Vector2i(collinearEdges.get(j).a),new Vector2i(minC.a));
-//                e2=new Edge(new Vector2i(collinearEdges.get(j).b),new Vector2i(minC.b));
-//            }else{
-//                e1=new Edge(new Vector2i(collinearEdges.get(j).a),new Vector2i(minC.b));
-//                e2=new Edge(new Vector2i(collinearEdges.get(j).b),new Vector2i(minC.a));
-//            }
-//            edges.remove(minC);
-//            edges.remove(collinearEdges.get(j));
-//            edges.add(e1);
-//            edges.add(e2);
-//            break; // delete after
-//        }
-//
-//        System.out.println(edges);
-//
-//        this.edges.clear();
-//        this.edges.addAll(edges);
-//
-//        return edges;
-//    }
 
-    ArrayList<Edge> whatYouAreDoingIsWrong(ArrayList<Vector2i> vertices){
+    ArrayList<Edge> finalEdges(ArrayList<Vector2i> vertices){
         ArrayList<Edge> edges=new ArrayList<>();
         int i;
         for (i=0;i<vertices.size();i++) edges.add(new Edge(vertices.get(i),vertices.get((i+1)%vertices.size())));
