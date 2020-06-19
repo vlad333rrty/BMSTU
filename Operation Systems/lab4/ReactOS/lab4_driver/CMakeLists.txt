@@ -1,5 +1,0 @@
-add_library(lab4_driver MODULE lab4_driver.c lab4_driver.rc)
-set_module_type(lab4_driver kernelmodedriver)
-add_importlibs(lab4_driver ntoskrnl hal)
-add_cd_file(TARGET lab4_driver DESTINATION reactos/system32/drivers FOR all)
-add_registry_inf(lab4_driver.inf)

@@ -1,7 +1,0 @@
-; lab3 device driver
-[AddReg]
-HKLM,"SYSTEM\CurrentControlSet\Services\lab3_driver","ErrorControl",0x00010001,0x00000000
-HKLM,"SYSTEM\CurrentControlSet\Services\lab3_driver","Group",0x00000000,"Base"
-HKLM,"SYSTEM\CurrentControlSet\Services\lab3_driver","ImagePath",0x00020000,"system32\drivers\lab3_driver.sys"
-HKLM,"SYSTEM\CurrentControlSet\Services\lab3_driver","Start",0x00000001,0x00000003
-HKLM,"SYSTEM\CurrentControlSet\Services\lab3_driver","Type",0x00010001,0x00000001

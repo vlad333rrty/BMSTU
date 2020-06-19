@@ -1,5 +1,0 @@
-add_library(lab3_driver MODULE lab3_driver.c lab3_driver.rc)
-set_module_type(lab3_driver kernelmodedriver)
-add_importlibs(lab3_driver ntoskrnl hal)
-add_cd_file(TARGET lab3_driver DESTINATION reactos/system32/drivers FOR all)
-add_registry_inf(lab3_driver.inf)
