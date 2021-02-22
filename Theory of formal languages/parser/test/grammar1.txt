@@ -1,0 +1,20 @@
+S -> {id}{=}{val} | {id}{=}{val}A | {target}{:}D |
+A -> {id}{=}{val} | {id}{=}{val}A | {target}{:}D |
+D -> {dependency}D | {target}D | {tab}C |
+C -> {if}KX | {for}GY | {command}P | {command}PA | {command}PT |
+P -> {flag}P | {arg}P | {$}{(}{id}{)}P | {flag} | {arg} | {$}{(}{id}{)} |
+T -> {tab}C |
+L -> {>} | {<} | {>=} | {<=} | {==} |
+K -> {[}UZ |
+X -> {then}TF | {then}TETF |
+U -> {val}LQ | {$}{(}{id}{)}LQ |
+Z -> {]} |
+Q -> {val} | {$}{(}{id}{)} |
+E -> {tab}{else} |
+F -> {tab}{fi} | {tab}{fi}A | {tab}{fi}T |
+G -> {id}I |
+I -> {in}{val} | {in}V |
+V -> {val}V | {val} |
+Y -> {tab}R |
+R -> {do}TW |
+W -> {tab}{done} | {tab}{done}A | {tab}{done}T |

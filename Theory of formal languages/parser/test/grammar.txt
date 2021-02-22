@@ -1,0 +1,17 @@
+S -> {id}{=}{val} | {id}{=}{val}{nl}T | {target}{:}A |
+T -> {id}{=}{val} | {id}{=}{val}{nl}T | {target}{:}A |
+A -> {dependency}A | {target}A | {nl}{tab}C |
+C -> {if}_Cond__Then_F | {command}B | {command}BX |
+F -> {nl}{tab}E_Cb__Fi_X | {nl}{tab}E_Cb__Fi_ |
+B -> {flag}B | {arg}D |  {$}{(}{id}{)}D | {arg} | {$}{(}{id}{)} |
+D -> {arg}D |  {$}{(}{id}{)}D | {arg} | {$}{(}{id}{)} |
+E -> {if}_Cond__Then_F | {command}B |{command}B_Cb__Else__Cb_E |
+X -> {nl}T | {nl}{tab}C |
+L -> {<} | {>} | {<=} | {>=} | {==} |
+_RCompSide_ -> {val} | {$}{(}{id}{)} |
+_Cb_-> {nl}{tab} |
+_Fi_ -> {fi} |
+_Then_ -> {then} |
+_Else_ -> {else} |
+_Cond_ ->  {[}{val}L_RCompSide__RSqP_ | {[}{$}{(}{id}{)}L_RCompSide_RSqP_ |
+_RSqP_ -> {]} |

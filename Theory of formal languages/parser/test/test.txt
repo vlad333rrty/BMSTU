@@ -1,0 +1,13 @@
+s=12
+a:b
+	echo $(s)
+	for i in 1 2 3
+	do
+	echo $(i)
+	if [$(i)>2] then
+	echo -n $(i)
+	fi
+	done
+b:
+	echo -n strong
+a=2
