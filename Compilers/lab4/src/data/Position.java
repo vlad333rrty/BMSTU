@@ -13,4 +13,8 @@ public class Position {
     public String toString() {
         return String.format("(%d,%d,%d)",line,pos,index);
     }
+
+    public String getShortRepresentation(){
+        return String.format("(%d,%d)",line,pos);
+    }
 }

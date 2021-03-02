@@ -1,16 +1,15 @@
 package data;
 
 public class Fragment {
-    private final int line,start,end;
+    private final Position start, follow;
 
-    public Fragment(int line, int start, int end) {
-        this.line = line;
-        this.start = start;
-        this.end = end;
+    public Fragment(Position start, Position follow){
+        this.start=start;
+        this.follow=follow;
     }
 
     @Override
     public String toString() {
-        return String.format("(%d,%d) - (%d,%d)",line,start,line,end);
+        return String.format("%s - %s",start.getShortRepresentation(),follow.getShortRepresentation());
     }
 }

@@ -82,28 +82,32 @@ public class Scanner extends AbstractScanner {
     }
 
     private AbstractToken getToken() {
-        int end = matcher.end() - matcher.start() + pos;
-        if (matcher.group(CONST_INTEGER_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(CONST_INTEGER_GROUP_NAME));
-            return new ConstIntegerToken(matcher.group(CONST_INTEGER_GROUP_NAME), new Fragment(line, pos, end));
-        }
-        if (matcher.group(IDENT_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(IDENT_GROUP_NAME));
-            return new IdentToken(matcher.group(IDENT_GROUP_NAME), new Fragment(line, pos, end));
-        }
-        if (matcher.group(ARRAY_NAME_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(ARRAY_NAME_GROUP_NAME));
-            return new ArrayNameToken(matcher.group(ARRAY_NAME_GROUP_NAME), new Fragment(line, pos, end));
-        }
-        if (matcher.group(KEY_WORD_GROUP_NAME) != null) {
-            return new KeyWordToken(matcher.group(KEY_WORD_GROUP_NAME), new Fragment(line, pos, end));
-        }
-        if (matcher.group(WHITESPACE_GROUP_NAME)!=null) {
+        if (matcher.group(WHITESPACE_GROUP_NAME) != null) {
             return getNextToken();
         }
         if (matcher.group(END_TOKEN_GROUP_NAME) != null) {
             finished = true;
             return null;
+        }
+
+        int end = matcher.end() - matcher.start() + pos;
+        Position start = new Position(line, pos, matcher.start());
+        Position follow = new Position(line, end, matcher.end());
+
+        if (matcher.group(CONST_INTEGER_GROUP_NAME) != null) {
+            nameDictionary.addName(matcher.group(CONST_INTEGER_GROUP_NAME));
+            return new ConstIntegerToken(matcher.group(CONST_INTEGER_GROUP_NAME), new Fragment(start, follow));
+        }
+        if (matcher.group(IDENT_GROUP_NAME) != null) {
+            nameDictionary.addName(matcher.group(IDENT_GROUP_NAME));
+            return new IdentToken(matcher.group(IDENT_GROUP_NAME), new Fragment(start, follow));
+        }
+        if (matcher.group(ARRAY_NAME_GROUP_NAME) != null) {
+            nameDictionary.addName(matcher.group(ARRAY_NAME_GROUP_NAME));
+            return new ArrayNameToken(matcher.group(ARRAY_NAME_GROUP_NAME), new Fragment(start, follow));
+        }
+        if (matcher.group(KEY_WORD_GROUP_NAME) != null) {
+            return new KeyWordToken(matcher.group(KEY_WORD_GROUP_NAME), new Fragment(start, follow));
         }
         throw new IllegalStateException("Unknown token type");
     }
