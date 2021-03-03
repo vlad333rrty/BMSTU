@@ -44,7 +44,6 @@ typedef union Token YYSTYPE;
 
 int continued;
 Position curPos;
-char *buffer;
 
 #define YY_USER_ACTION {   \
         int i;\
@@ -99,12 +98,32 @@ void replaceDoubleQuoteInLiteralString(char *str,int len,char *buf){
             buf[j++]=str[i++];
         }
     }
+    buf[j]='\0';
+}
+
+void interpretRegularString(char *str,int len,char *buf){
+    int j=0;
+    for (int i=1;i<len-1;){
+        if (str[i]=='\\'){
+            if (str[i+1]=='n'){
+                buf[j++]='\n';
+            }else if (str[i+1]=='t'){
+                buf[j++]='\t';
+            }else if (str[i+1]=='\"'){
+                buf[j++]='\"';
+            }
+            i+=2;
+        }else{
+            buf[j++]=str[i++];
+        }
+    }
+    buf[j]='\0';
 }
 
 %}
 
 NUMBER (0|1+)
-REGULAR_STRING (\"(\\\"|\t|\n|[^\\\"\t\n])*\")
+REGULAR_STRING (\"(\\\"|\t|\n|\\n|\\t|[^\\\"\t\n])*\")
 LITERAL_STRING (@\"(\"\"|[^\"])*\")
 
 %x REG_STRING LIT_STRING_START LIT_STRING
@@ -149,13 +168,13 @@ LITERAL_STRING (@\"(\"\"|[^\"])*\")
                             return TAG_NUMBER;
                         }
 {REGULAR_STRING}        {
+                            interpretRegularString(yytext,yyleng,yytext);
                             yylval->ident=yytext;
                             return TAG_REGULAR_STRING;
                         }
 {LITERAL_STRING}        {
-                            buffer=malloc(yyleng);
-                            replaceDoubleQuoteInLiteralString(yytext,yyleng,buffer);
-                            yylval->ident=buffer;
+                            replaceDoubleQuoteInLiteralString(yytext,yyleng,yytext);
+                            yylval->ident=yytext;
                             return TAG_LITERAL_STRING;
                         }
 .                       {
@@ -175,8 +194,12 @@ int main(){
     char buf[SIZE];
     char c;
     int i=0;
-    while ((c=fgetc(file))!=EOF){
+    while ((c=fgetc(file))!=EOF && i < SIZE){
         buf[i++]=c;
+    }
+    if (i == SIZE) {
+        printf("File is too long!\n");
+        return 1;
     }
     buf[i]='\0';
     if (ferror(file)){
@@ -199,8 +222,6 @@ int main(){
             printf(" : %s\n",value.ident);
         }
     }while(tag!=0);
-
-    free(buffer);
 
     return 0;
 }
