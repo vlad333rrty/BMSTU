@@ -29,4 +29,13 @@ public class Message implements IMessage{
     public String toString() {
         return String.format("%s %s: %s",type.toString(),position,value);
     }
+
+    @Override
+    public int compareTo(IMessage o) {
+        if (!(o instanceof Message)){
+            return value.compareTo(o.getValue());
+        }
+        Message m = (Message) o;
+        return position.compareTo(m.position);
+    }
 }

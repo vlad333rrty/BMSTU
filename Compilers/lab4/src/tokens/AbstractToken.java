@@ -2,7 +2,7 @@ package tokens;
 
 import data.Fragment;
 
-public abstract class AbstractToken {
+public abstract class AbstractToken implements IToken{
     protected final String value;
     protected final Fragment fragment;
 

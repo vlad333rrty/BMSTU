@@ -1,7 +1,8 @@
 import modules.AbstractScanner;
 import scanner.Compiler;
 import scanner.Scanner;
-import tokens.AbstractToken;
+import tokens.EndToken;
+import tokens.IToken;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,10 +12,10 @@ public final class Application {
     public void start(String fileName){
         String program=readFile(fileName);
         AbstractScanner scanner=new Compiler().getScanner(program);
-        for (AbstractToken token=scanner.getNextToken();token!=null;token=scanner.getNextToken()){
+        for (IToken token = scanner.getNextToken(); token!= EndToken.getInstance(); token=scanner.getNextToken()){
             System.out.println(token);
         }
-        ((Scanner)scanner).printMessageList();
+        ((Scanner)scanner).printMessage();
     }
 
     private String readFile(String fileName) {

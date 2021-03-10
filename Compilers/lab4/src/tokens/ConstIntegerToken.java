@@ -9,6 +9,6 @@ public class ConstIntegerToken extends AbstractToken {
 
     @Override
     public String toString() {
-        return String.format("%s %s:%s","CONST_INT",fragment,value);
+        return String.format("%s %s : %s","CONST_INT",fragment,value);
     }
 }

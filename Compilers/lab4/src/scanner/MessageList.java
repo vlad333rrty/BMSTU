@@ -6,7 +6,7 @@ import data.Message;
 import data.Position;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 public class MessageList implements IMessageList {
@@ -25,7 +25,7 @@ public class MessageList implements IMessageList {
     @Override
     public List<IMessage> getSorted() {
         List<IMessage> sorted=messages;
-        sorted.sort(Comparator.comparing(IMessage::getValue));
+        Collections.sort(sorted);
         return sorted;
     }
 }

@@ -4,111 +4,143 @@ import data.*;
 import modules.AbstractScanner;
 import tokens.*;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static format.FormatUtils.format;
 
 public class Scanner extends AbstractScanner {
-    private static final String CONST_INTEGER_GROUP_NAME="constInteger";
-    private static final String IDENT_GROUP_NAME="ident";
-    private static final String ARRAY_NAME_GROUP_NAME="arrayName";
-    private static final String KEY_WORD_GROUP_NAME="keyWord";
-    private static final String END_TOKEN_GROUP_NAME="end";
-    private static final String WHITESPACE_GROUP_NAME ="whitespace";
-    private static final String ERROR_MESSAGE="syntax error";
-    private static final String END_CHAR="!";
+    private static final char CONST_INT_START='#';
+    private static final char IDENT_START_1='.';
+    private static final char IDENT_START_2=':';
+    private static final char ARRAY_START_1=',';
+    private static final char ARRAY_START_2=';';
+    private static final char END_SYMBOL='!';
+    private static final char NEW_LINE='\n';
+    private static final char SPACE = ' ';
+    private static final char TAB = '\t';
+    private static final char PLEASE_START = 'P';
+    private static final char DO_START = 'D';
+    private static final char FORGET_START = 'F';
 
-    private final IMessageList messageList=new MessageList();
-    private final INameDictionary nameDictionary=new NameDictionary();
+    private static final String DECIMAL = "Decimal";
+    private static final String KEY_WORD_PLEASE = "PLEASE";
+    private static final String KEY_WORD_DO = "DO";
+    private static final String KEY_WORD_FORGET = "FORGET";
 
-    private final Matcher matcher;
+    private final IMessageList messageList = new MessageList();
 
-    private int lastMatchEnd,lastMatchStart,line=1,pos=1;
-    private boolean finished;
+    private final Position pos = new Position(1,0,0);
+    private static final Logger logger=Logger.getLogger(Scanner.class.getName());
 
     public Scanner(String program) {
-        super(program.replaceAll("\n+$", "").concat(END_CHAR));
-        String constIntegerRegex = "#[0-9]+";
-        String identRegex = "(\\.|:)[0-9]+";
-        String arrayNameRegex = "(,|;)[0-9]+";
-        String keyWordRegex = "PLEASE|DO|FORGET";
-        String whitespaceRegex="\\s";
-        Pattern pattern = Pattern.compile(String.format("(?<%s>%s)|(?<%s>%s)|(?<%s>%s)|(?<%s>%s)|(?<%s>%s)|(?<%s>%s)",
-                CONST_INTEGER_GROUP_NAME, constIntegerRegex, IDENT_GROUP_NAME, identRegex, ARRAY_NAME_GROUP_NAME,
-                arrayNameRegex, KEY_WORD_GROUP_NAME, keyWordRegex, WHITESPACE_GROUP_NAME,whitespaceRegex,
-                END_TOKEN_GROUP_NAME, END_CHAR));
-        matcher = pattern.matcher(this.program);
+        super(program.replaceAll("\n+$", "").concat(String.format("%s",END_SYMBOL)));
     }
 
     @Override
-    public AbstractToken getNextToken() {
-        if (finished) {
-            return null;
+    public IToken getNextToken() {
+        if (finished()){
+            return EndToken.getInstance();
         }
-        if (matcher.find()) {
-            if (isSyntaxError()) {
-                updatePos(lastMatchStart,lastMatchEnd);
-                messageList.addError(new Position(line, pos, lastMatchEnd), ERROR_MESSAGE);
-                updatePos(lastMatchEnd,matcher.start());
-            }else{
-                updatePos(lastMatchStart, matcher.start());
-            }
-            lastMatchStart = matcher.start();
-            lastMatchEnd = matcher.end();
-            return getToken();
-        } else {
-            throw new IllegalStateException("Unexpected input"); //Just in case
+        char symbol = getNextSymbol();
+        IToken token;
+        switch (symbol){
+            case CONST_INT_START:
+                token= onDeclarationDetected(ConstIntegerToken.class);
+                break;
+            case ARRAY_START_1:
+            case ARRAY_START_2:
+                token= onDeclarationDetected(ArrayNameToken.class);
+                break;
+            case IDENT_START_1:
+            case IDENT_START_2:
+                token= onDeclarationDetected(IdentToken.class);
+                break;
+            case PLEASE_START:
+                token = onKeywordDetected(KEY_WORD_PLEASE);
+                break;
+            case DO_START:
+                token = onKeywordDetected(KEY_WORD_DO);
+                break;
+            case FORGET_START:
+                token = onKeywordDetected(KEY_WORD_FORGET);
+                break;
+            case END_SYMBOL:
+                token = EndToken.getInstance();
+                break;
+            case NEW_LINE:
+                pos.incLine();
+                pos.setPos(0);
+                return getNextToken();
+            case SPACE:
+            case TAB:
+                return getNextToken();
+            default:
+                messageList.addError(pos,Messages.SYNTAX_ERROR);
+                return getNextToken();
+        }
+
+        return token;
+    }
+
+    public void printMessage(){
+        for (IMessage m : messageList.getSorted()){
+            System.out.println(m);
         }
     }
 
-    public void printMessageList(){
-        for (IMessage message:messageList.getSorted()){
-            System.out.println(message);
+    private char getNextSymbol(){
+        return program.charAt(pos.goToNextSymbol());
+    }
+
+    private char peekNextSymbol(){
+        return program.charAt(pos.getIndex());
+    }
+
+    private boolean finished(){
+        return pos.getIndex()==program.length();
+    }
+
+    private IToken onDeclarationDetected(Class<?> clazz){
+        Position startPos=new Position(pos);
+        StringBuilder value=new StringBuilder();
+        while (Character.isDigit(peekNextSymbol())) {
+            value.append(getNextSymbol());
         }
-    }
-
-    private void updatePos(int startPos, int endPos) {
-        for (int i = startPos; i < endPos; i++) {
-            if (program.charAt(i) == '\n') {
-                line++;
-                pos = 1;
-            } else {
-                pos++;
-            }
-        }
-    }
-
-    private boolean isSyntaxError() {
-        return lastMatchEnd < matcher.start();
-    }
-
-    private AbstractToken getToken() {
-        if (matcher.group(WHITESPACE_GROUP_NAME) != null) {
+        if (pos.equals(startPos)){
+            String symbol = String.format("%s",getNextSymbol());
+            startPos.goToNextSymbol();
+            messageList.addError(startPos,format(Messages.UNEXPECTED_CHARACTER__0__1__EXPECTED,symbol,DECIMAL));
             return getNextToken();
         }
-        if (matcher.group(END_TOKEN_GROUP_NAME) != null) {
-            finished = true;
+
+        Fragment fragment = new Fragment(startPos,pos);
+        try {
+            return (IToken) clazz.getConstructors()[0].newInstance(value.toString(),fragment);
+        } catch (Exception e){
+            logger.log(Level.SEVERE,format(Messages.FAILED_TO_CREATE_INSTANCE_OF__0,clazz.getName()));
             return null;
         }
+    }
 
-        int end = matcher.end() - matcher.start() + pos;
-        Position start = new Position(line, pos, matcher.start());
-        Position follow = new Position(line, end, matcher.end());
-
-        if (matcher.group(CONST_INTEGER_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(CONST_INTEGER_GROUP_NAME));
-            return new ConstIntegerToken(matcher.group(CONST_INTEGER_GROUP_NAME), new Fragment(start, follow));
+    private IToken onKeywordDetected(String expectedKeyword){
+        StringBuilder value = new StringBuilder().append(expectedKeyword.charAt(0));
+        Position startPos=new Position(pos);
+        int i=1;
+        char symbol;
+        boolean flag=true;
+        while (i<expectedKeyword.length() && Character.isLetter(symbol=getNextSymbol())){
+            if (symbol != expectedKeyword.charAt(i)){
+                flag = false;
+            }
+            value.append(symbol);
+            i++;
         }
-        if (matcher.group(IDENT_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(IDENT_GROUP_NAME));
-            return new IdentToken(matcher.group(IDENT_GROUP_NAME), new Fragment(start, follow));
+        if (flag){
+            return new KeyWordToken(expectedKeyword,new Fragment(startPos,pos));
+        }else{
+            messageList.addError(startPos,format(Messages.WRONG_COMMAND__0__SUGGESTION__1,value.toString(),expectedKeyword));
+            return getNextToken();
         }
-        if (matcher.group(ARRAY_NAME_GROUP_NAME) != null) {
-            nameDictionary.addName(matcher.group(ARRAY_NAME_GROUP_NAME));
-            return new ArrayNameToken(matcher.group(ARRAY_NAME_GROUP_NAME), new Fragment(start, follow));
-        }
-        if (matcher.group(KEY_WORD_GROUP_NAME) != null) {
-            return new KeyWordToken(matcher.group(KEY_WORD_GROUP_NAME), new Fragment(start, follow));
-        }
-        throw new IllegalStateException("Unknown token type");
     }
 }

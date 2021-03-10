@@ -9,6 +9,6 @@ public class ArrayNameToken extends AbstractToken {
 
     @Override
     public String toString() {
-        return String.format("%s %s:%s","ARRAY",fragment,value);
+        return String.format("%s %s : %s","ARRAY",fragment,value);
     }
 }

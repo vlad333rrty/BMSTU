@@ -9,6 +9,6 @@ public class IdentToken extends AbstractToken {
 
     @Override
     public String toString() {
-        return String.format("%s %s:%s","IDENT",fragment,value);
+        return String.format("%s %s : %s","IDENT",fragment,value);
     }
 }

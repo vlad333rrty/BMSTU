@@ -1,11 +1,11 @@
 package modules;
 
-import tokens.AbstractToken;
+import tokens.IToken;
 
 public abstract class AbstractScanner {
     protected String program;
 
-    public abstract AbstractToken getNextToken();
+    public abstract IToken getNextToken();
 
     protected AbstractScanner(String program){
         this.program=program;
