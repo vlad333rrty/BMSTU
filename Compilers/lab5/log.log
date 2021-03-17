@@ -1,0 +1,152 @@
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, x
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, x1
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, x12
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6, 
+
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 2
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 2 -> 2, 21
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 12, t
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 12 -> 13, ty
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 13 -> 14, typ
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 14 -> 15, type
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 15 -> 16, typed
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 16 -> 17, typede
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 17 -> 18, typedef
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, ;
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 1
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 2 -> 2, 12
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6,  
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 4, %
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %1
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %12
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %123
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 5, %123\
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 5 -> 4, %123\%
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %123\%2
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6,  
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, s
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6, 
+
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 6 -> 6, 
+
+
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 7, d
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 7 -> 8, de
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 8 -> 9, def
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6,  
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 7, d
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 7 -> 8, de
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 8 -> 9, def
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 9 -> 10, defi
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 10 -> 11, defin
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6,  
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 7, d
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 7 -> 8, de
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 8 -> 9, def
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 9 -> 10, defi
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 10 -> 11, defin
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 11 -> 18, define
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 18 -> 1, defined
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6,  
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 1
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, ;
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 2
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, ;
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 3
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, #
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 4
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, #
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, h
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, he
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, hel
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, hell
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 1 -> 1, hello
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 3, #
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, a
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 4, %
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %s
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %st
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 4 -> 4, %str
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, c
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6, 
+
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 6 -> 6, 
+
+
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 2, 1
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 2 -> 2, 12
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 1, w
+мар. 17, 2021 11:30:56 AM scanner.Scanner getNextToken
+INFO: 0 -> 6, 
+

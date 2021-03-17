@@ -1,0 +1,6 @@
+x12
+21typedef;12 %123\%2% \\s
+
+def defin defined 1;2;3#4#hello#a%str%c
+
+12w
