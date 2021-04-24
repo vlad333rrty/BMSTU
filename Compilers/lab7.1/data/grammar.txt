@@ -1,0 +1,10 @@
+S = (LEFT_BRACE)<E> | (epsilon) |
+E = (NON_TERMINAL)<T> |
+T = (RIGHT_BRACE)<K> |
+K = (COMMA)(NON_TERMINAL)<K> | (LEFT_SQUARE_BRACKET)<R> |
+R = (NON_TERMINAL)<F> |
+F = (COLON)<Q><J> |
+Q = (VAL)<G> | (NON_TERMINAL)<G> | (AT)<G> |
+G = (COLON)<Q> | (VAL)<G> | (NON_TERMINAL)<G> | (AT)<G> | (epsilon) |
+J = (RIGHT_SQUARE_BRACKET)<D> |
+D = (epsilon) | (LEFT_SQUARE_BRACKET)<R> |

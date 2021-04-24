@@ -1,0 +1,107 @@
+package bmstu.iu9.calculator;
+
+import bmstu.iu9.generator.data.Status;
+import bmstu.iu9.generator.grammar.GObject;
+import bmstu.iu9.generator.grammar.NonTerminal;
+import bmstu.iu9.generator.modules.Compiler;
+import bmstu.iu9.generator.modules.ICompiler;
+import bmstu.iu9.generator.parser.AbstractTopDownParser;
+import bmstu.iu9.generator.parser.CalculatorParser;
+import bmstu.iu9.generator.parser.ParseResult;
+import bmstu.iu9.generator.scanner.AbstractScanner;
+import bmstu.iu9.generator.syntaxtree.ISyntaxTreeNode;
+import bmstu.iu9.generator.syntaxtree.SyntaxTreeNonTerminalNode;
+import bmstu.iu9.generator.syntaxtree.SyntaxTreeTerminalNode;
+import bmstu.iu9.generator.tokens.AdditiveOperationToken;
+import bmstu.iu9.generator.tokens.EndToken;
+import bmstu.iu9.generator.tokens.IToken;
+import bmstu.iu9.generator.tokens.MultiplicativeOperationToken;
+import bmstu.iu9.generator.tokens.NumberToken;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static bmstu.iu9.utils.SerializationUtils.deserializeAxiomName;
+import static bmstu.iu9.utils.SerializationUtils.deserializeEpsilonName;
+import static bmstu.iu9.utils.SerializationUtils.deserializeTable;
+
+public class Calculator {
+    private static final int TRANSIT_RULE_LENGTH = 2;
+    private static final int EXPR_RULE_LENGTH = 3;
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        String program = "\"3\"\"*\"\"3\"\"+\"\"2\"\"*\"\"(\"\"2\"\"+\"\"2\"\")\"";
+        ICompiler compiler = new Compiler();
+        AbstractScanner sc = compiler.getScanner(program);
+
+        List<IToken> tokenStream = new ArrayList<>();
+
+        for (IToken token = sc.getNextToken(); token != EndToken.getInstance(); token = sc.getNextToken()) {
+            tokenStream.add(token);
+        }
+        tokenStream.add(EndToken.getInstance());
+
+        Map<NonTerminal, Map<String, List<GObject>>> table = deserializeTable();
+
+        AbstractTopDownParser parser = new CalculatorParser();
+        ParseResult result = parser.parse(table, tokenStream, deserializeAxiomName(), deserializeEpsilonName());
+        if (result.getStatus() == Status.FAILURE) {
+            System.err.println(result.getMessage());
+            System.exit(-1);
+        }
+        System.out.println(result.getMessage());
+        System.out.println(result.getSyntaxTree());
+
+        System.out.println(calculate(result.getSyntaxTree().getRoot()));
+    }
+
+    private static int calculate(ISyntaxTreeNode node) {
+        if (node instanceof SyntaxTreeTerminalNode) {
+            IToken token = ((SyntaxTreeTerminalNode) node).getCorrespondingToken();
+            if (token instanceof NumberToken) {
+                return Integer.parseInt(removeQuotes(((NumberToken) token).getValue()));
+            }
+        } else {
+            if (node.getChildren().size() == TRANSIT_RULE_LENGTH) {
+                ISyntaxTreeNode first = node.getChildren().get(0);
+                ISyntaxTreeNode second = node.getChildren().get(1);
+                if (first instanceof SyntaxTreeNonTerminalNode
+                        && second instanceof SyntaxTreeNonTerminalNode) {
+                    if (second.getChildren().get(0) instanceof SyntaxTreeTerminalNode) {
+                        IToken token = ((SyntaxTreeTerminalNode) second.getChildren().get(0)).getCorrespondingToken();
+                        if (token instanceof AdditiveOperationToken) {
+                            return calculate(first) + calculate(second);
+                        } else if (token instanceof MultiplicativeOperationToken) {
+                            return calculate(first) * calculate(second);
+                        }
+                        return calculate(first);
+                    }
+                }
+            } else if (node.getChildren().size() == EXPR_RULE_LENGTH) {
+                ISyntaxTreeNode first = node.getChildren().get(1);
+                ISyntaxTreeNode second = node.getChildren().get(2);
+                if (first instanceof SyntaxTreeNonTerminalNode
+                        && second instanceof SyntaxTreeNonTerminalNode) {
+                    if (second.getChildren().get(0) instanceof SyntaxTreeTerminalNode) {
+                        IToken token = ((SyntaxTreeTerminalNode) second.getChildren().get(0)).getCorrespondingToken();
+                        if (token instanceof AdditiveOperationToken) {
+                            return calculate(first) + calculate(second);
+                        } else if (token instanceof MultiplicativeOperationToken) {
+                            return calculate(first) * calculate(second);
+                        }
+                        return calculate(first);
+                    }
+                }
+                return calculate(first);
+            }
+        }
+
+        return calculate(node.getChildren().get(0));
+    }
+
+    private static String removeQuotes(String str) {
+        return str.substring(1, str.length() - 1);
+    }
+}

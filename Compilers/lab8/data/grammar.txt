@@ -1,0 +1,5 @@
+S -> [ E ] S?
+E -> nt : T
+T -> val F | nt F | [ T ] F
+F -> val F | nt F | [ T ] F | : T | *F
+
