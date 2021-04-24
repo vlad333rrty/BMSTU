@@ -83,7 +83,7 @@ NTSTATUS NTAPI DriverEntry(IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING Re
     }
 
     processes = (PSYSTEM_PROCESSES)info;
-    DPRINT1("lab3 Myruizhnikov Vladislav");
+    DPRINT1("lab3 Name Surname");
     for (;;){
         PCWSTR name = processes->ProcessName.Buffer;
         if (name == NULL)

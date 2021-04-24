@@ -11,7 +11,7 @@ VOID NTAPI BeepUnload(IN PDRIVER_OBJECT DriverObject);
 NTSTATUS NTAPI DriverEntry(IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING RegPath)
 {
 	DriverObject->DriverUnload = BeepUnload;
-        DPRINT1("Driver made by Myruizhnikov Vladislav\n");
+        DPRINT1("Driver made by Name Surname\n");
         return STATUS_SUCCESS;
 }
 

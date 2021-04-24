@@ -25,7 +25,7 @@ NTSTATUS NTAPI DriverEntry(IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING Re
     	PHARDWARE_PTE_X86 PPTE = NULL;
     	PSYSTEM_PROCESS_INFORMATION ProcessInformation = NULL;
 		DriverObject->DriverUnload = BeepUnload;
-        DPRINT1("lab4 Myruizhnikov Vladislav\n");
+        DPRINT1("lab4 Name Surname\n");
     	ZwAllocateVirtualMemory(NtCurrentProcess(),&Addr,0,&Size,MEM_RESERVE,PAGE_READWRITE);
     	Size = PAGE_SIZE * 5;
     	ZwAllocateVirtualMemory(NtCurrentProcess(),&Addr,0,&Size,MEM_COMMIT,PAGE_READWRITE);

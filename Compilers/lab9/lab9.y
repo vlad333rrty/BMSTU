@@ -88,12 +88,14 @@ class_entry:
 												char* indent = get_indent(env[0]);
 												$$ = MEM(strlen(indent)+strlen($1) + 1 + strlen($2));
 												sprintf($$,"%s%s\n%s",indent,$1,$2);
+												free(indent);
 	 											}
 	|
 	RBRACE							{
 									char* indent = get_indent(env[0] - INDENT);
 									$$ = MEM(strlen(indent) + strlen("}"));
 									sprintf($$,"%s}",indent);
+									free(indent);
 								}
 	;
 
